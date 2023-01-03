@@ -2,7 +2,7 @@
 
 use App\Models\Post;
 use Illuminate\Support\Facades\Route;
-
+use Spatie\YamlFrontMatter\YamlFrontMatter;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,7 +15,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('posts');
+
+    $posts = collect(File::files(resource_path("posts")))
+        ->map(fn ($file) => YamlFrontMatter::parseFile($file))
+        ->map(fn ($document) => new Post(
+            $document->title,
+            $document->excerpt,
+            $document->date,
+            $document->body(),
+            $document->slug
+        ));
+
+    ddd($posts);
+    // return view('posts', [
+    //     "posts" => Post::all()
+    // ]);
 });
 
 
