@@ -10,7 +10,6 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
 
 class Post
 {
-
     public function __construct(
         public string $title,
         public string $excerpt,
@@ -22,9 +21,7 @@ class Post
 
     public static function all()
     {
-
         return cache()->rememberForever('posts.all', function () {
-
             return collect(File::files(resource_path("posts")))
                 ->map(fn ($file) => YamlFrontMatter::parseFile($file))
                 ->map(fn ($document) => new Post(
@@ -40,8 +37,19 @@ class Post
 
     public static function find($slug)
     {
-        $posts = static::all();
+        $post = static::all()->firstWhere("slug", $slug);
+        return $post;
+    }
 
-        return $posts->firstWhere("slug", $slug);
+
+    public static function findOrFail($slug)
+    {
+        $post = static::find($slug);
+
+        if (!$post) {
+            throw new ModelNotFoundException();
+        }
+
+        return $post;
     }
 }
