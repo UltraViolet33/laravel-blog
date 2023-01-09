@@ -5,6 +5,8 @@
                 <a href="posts/{{ $post->id }}">
                     {{ $post->title }} </a>
             </h1>
+            <a href="">{{ $post->category->name }}</a>
+
             <div>
                 <p>{{ $post->excerpt }}</p>
             </div>
