@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
@@ -14,15 +15,23 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
 |
 */
 
-Route::get('/', function () {
-    return view('posts', [
-        "posts" => Post::all()
-    ]);
-});
+
+Route::get('/', [PostController::class, 'all']);
+
+Route::get('/posts/create', [PostController::class, 'create']);
+
+Route::post('/posts/store', [PostController::class, 'store']);
 
 
-Route::get('/posts/{post}', function (Post $post) {
-    return view("post", [
-        "post" => $post
-    ]);
-});
+// Route::get('/', function () {
+//     return view('posts', [
+//         "posts" => Post::all()
+//     ]);
+// });
+
+
+// Route::get('/posts/{post}', function (Post $post) {
+//     return view("post", [
+//         "post" => $post
+//     ]);
+// });
