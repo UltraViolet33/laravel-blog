@@ -1,8 +1,8 @@
 <?php
 
-use App\Models\Post;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
-use Spatie\YamlFrontMatter\YamlFrontMatter;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,15 +14,13 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
 |
 */
 
-Route::get('/', function () {
-    return view('posts', [
-        "posts" => Post::all()
-    ]);
-});
+// Categories
+Route::get('/categories/all', [CategoryController::class, 'all']);
+Route::get('/categories/create', [CategoryController::class, 'create']);
+Route::post('/categories/store', [CategoryController::class, 'store']);
 
-
-Route::get('/posts/{post}', function (Post $post) {
-    return view("post", [
-        "post" => $post
-    ]);
-});
+// Posts
+Route::get('/', [PostController::class, 'all']);
+Route::get('/posts/all', [PostController::class, 'all']);
+Route::get('/posts/create', [PostController::class, 'create']);
+Route::post('/posts/store', [PostController::class, 'store']);
