@@ -2,9 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
-use App\Models\Post;
 use Illuminate\Support\Facades\Route;
-use Spatie\YamlFrontMatter\YamlFrontMatter;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,5 +21,6 @@ Route::post('/categories/store', [CategoryController::class, 'store']);
 
 // Posts
 Route::get('/', [PostController::class, 'all']);
+Route::get('/posts/all', [PostController::class, 'all']);
 Route::get('/posts/create', [PostController::class, 'create']);
 Route::post('/posts/store', [PostController::class, 'store']);
